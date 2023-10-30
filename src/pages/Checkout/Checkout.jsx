@@ -17,7 +17,7 @@ const Checkout = () => {
     const form = e.target;
     const name = form.name.value
     const date = form.date.value
-    const email = form.date.value;
+    const email = form.email.value;
     const amount = form.amount.value;
 
     const options = {
