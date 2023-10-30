@@ -1,14 +1,31 @@
 import { Link } from "react-router-dom";
 import logo from '../../../assets/logo.svg'
+import { useContext } from "react";
+import { AuthContext } from "../../../Providers/AuthProvider";
 
 const Navbar = () => {
+
+  const {user,logOut,setUser} = useContext(AuthContext)
+
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+      console.log("success");
+      setUser(null)
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  }
+  // console.log(user)
     const navlinks = <>
     <li><Link to={'/'}>home</Link></li>
     <li><Link to={'/about'}>About</Link></li>
-    <li><Link to={'/login'}>Login</Link></li>
-    <li><Link to={'/about'}>Services</Link></li>
-    <li><Link to={'/about'}>Blog</Link></li>
-    <li><Link to={'/about'}>Contact</Link></li>
+    {/* <li><Link to={'/login'}>Login</Link></li> */}
+    {
+      user?.email ? <li><button onClick={handleSignOut}>Log out {user?.email}</button></li>:
+      <li><Link to={'/login'}>Login {user?.email}</Link></li>
+    }
+    {/* <li>{user?.email && <button onClick={handleLogout}>Logout</button>}</li> */}
     </>
     return (
         <div>
