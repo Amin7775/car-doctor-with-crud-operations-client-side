@@ -5,27 +5,22 @@ import { AuthContext } from "../../../Providers/AuthProvider";
 
 const Navbar = () => {
 
-  const {user,logOut,setUser} = useContext(AuthContext)
+  const {user, logOut} = useContext(AuthContext);
 
-  const handleSignOut = async () => {
-    try {
-      await logOut();
-      console.log("success");
-      setUser(null)
-    } catch (error) {
-      console.error("Logout failed", error);
+    const handleLogOut = () => {
+        logOut()
+        .then(() =>{})
+        .catch( error => console.log(error))
     }
-  }
   // console.log(user)
     const navlinks = <>
     <li><Link to={'/'}>home</Link></li>
     <li><Link to={'/about'}>About</Link></li>
     <li><Link to={'/bookings'}>Bookings</Link></li>
     {/* <li><Link to={'/login'}>Login</Link></li> */}
-    {
-      user?.email ? <li><button onClick={handleSignOut}>Log out {user?.email}</button></li>:
-      <li><Link to={'/login'}>Login {user?.email}</Link></li>
-    }
+    { user?.email ?  <li><button onClick={handleLogOut}>Log out</button></li> 
+        : <li> <Link to="/login">Login</Link> </li>
+       }
     {/* <li>{user?.email && <button onClick={handleLogout}>Logout</button>}</li> */}
     </>
     return (
